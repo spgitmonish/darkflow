@@ -5,12 +5,7 @@ import numpy as np
 import json
 from boxespredict.predict import *
 
-if os.name == 'nt':
-	options = {"pbLoad": os.getcwd() + "\\saved_graph\\40375-tiny-yolo-voc-3c.pb", "metaLoad": os.getcwd() + "\\saved_graph\\40375-tiny-yolo-voc-3c.meta", "threshold": 0.1}
-else:
-	options = {"pbLoad": os.getcwd() + "/saved_graph/40375-tiny-yolo-voc-3c.pb", "metaLoad": os.getcwd() + "/40375-saved_graph/tiny-yolo-voc-3c.meta", "threshold": 0.1}
-
-#tfnet = TFNet(options)
+# Class for testing the yolo model independent of the cythonized prediction files
 class YOLOTest:
 	def __init__(self, options):
 		print('\nLoading from .pb and .meta')
@@ -35,13 +30,3 @@ class YOLOTest:
 
 				# Threshold for prediction filtering
 				self.threshold = options["threshold"]
-
-# Create a test object
-yolo_test = YOLOTest(options)
-
-for img_file in os.listdir(os.getcwd() + "/sample_img"):
-	file_path = os.getcwd() + "/sample_img/" + img_file
-	imgcv = cv2.imread(file_path)
-	result = return_predict(imgcv, yolo_test)
-	print(result)
-	print("\n")
